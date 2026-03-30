@@ -1,0 +1,9 @@
+# Ignorar pastas
+frames/
+myvenv/
+video/
+
+# Permitir apenas arquivos Python
+*
+!*.py
+!.gitignore
