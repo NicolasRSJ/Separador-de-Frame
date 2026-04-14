@@ -1,10 +1,11 @@
 from pathlib import Path
+from shutil import which
 import yt_dlp
 
 BASE_DIR = Path(__file__).resolve().parent
 VIDEO_DIR = BASE_DIR / "video"
 
-FFMPEG_BIN = r"C:\Users\CONTAUTO\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin"
+FFMPEG_PATH = which("ffmpeg")
 
 def proximo_nome_video():
     VIDEO_DIR.mkdir(exist_ok=True)
@@ -25,8 +26,10 @@ def baixar_video(url):
         "merge_output_format": "mp4",
         "outtmpl": str(caminho_saida),
         "noplaylist": True,
-        "ffmpeg_location": FFMPEG_BIN,
     }
+
+    if FFMPEG_PATH:
+        ydl_opts["ffmpeg_location"] = FFMPEG_PATH
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
